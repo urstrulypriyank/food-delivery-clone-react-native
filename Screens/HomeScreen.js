@@ -12,6 +12,8 @@ import {
   MagnifyingGlassIcon
 } from "react-native-heroicons/outline";
 import Categeories from "../Components/Categeories";
+import FeaturedRow from "../Components/FeaturedRow";
+
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -24,7 +26,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView className="bg-white pt-5">
       {/* VIEW-1  Header*/}
-      <View>
+      <View >
         <View className="flex-row pb-3 items-center mx-4 space-x-2">
           <Image
             source={require("../assets/Images/logo.png")}
@@ -46,7 +48,7 @@ export default function HomeScreen() {
       </View>
 
         {/* VIEW-2  search */}
-
+  
         <View className="flex-row items-center pb-2 mx-4">
          
           <View className="flex-1 flex-row  space-x-2 bg-gray-200 p-3 mx-2">
@@ -68,10 +70,15 @@ export default function HomeScreen() {
           <Categeories/> 
 
 
-        {/* Featured rows */}
 
-      </ScrollView>
       
+      
+      
+      
+      
+      </ScrollView>
+        {/* Featured rows */}
+      <FeaturedRow title="Fetured" description="Paid Placements from partners" featuredCategory="featured"/>     
       
 
 
