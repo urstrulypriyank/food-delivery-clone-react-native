@@ -76,13 +76,41 @@ export default function HomeScreen() {
       
       
       
-      </ScrollView>
-        {/* Featured rows */}
-      <FeaturedRow title="Fetured" description="Paid Placements from partners" featuredCategory="featured"/>     
+        {/* Featured food row horizontal  */}
+      
+      <FeaturedRow 
+      id="123"
+      title="Fetured"
+      description="Paid Placements from partners" 
+      featuredCategory="featured"
+      />     
+        {/* Tasty Discounts horizontal scroll view */}
+      
+      <FeaturedRow 
+      id="125"
+      title="Fetured"
+      description="Paid Placements from partners" 
+      featuredCategory="featured"
+      />     
+      
+      
+      
+        {/* Offer Near you horizontal scroll view */}
+      
+      <FeaturedRow 
+      id="124"
+      title="Fetured"
+      description="Paid Placements from partners" 
+      featuredCategory="featured"
+      />     
+      
+
+
       
 
 
 
+      </ScrollView>
     </SafeAreaView>
   );
 }
