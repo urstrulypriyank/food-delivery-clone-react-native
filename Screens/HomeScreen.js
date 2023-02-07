@@ -24,7 +24,7 @@ export default function HomeScreen() {
     });
   }, []);
   return (
-    <SafeAreaView className="bg-white pt-5">
+    <SafeAreaView className="bg-white pt-5 flex-1">
       {/* VIEW-1  Header*/}
       <View >
         <View className="flex-row pb-3 items-center mx-4 space-x-2">
@@ -63,7 +63,7 @@ export default function HomeScreen() {
 
       {/* Body Scroll VIew */}
 
-      <ScrollView className="bg-gray-100">
+      <ScrollView className="bg-gray-100" >
 
         {/* Catageories compontens */}
 
@@ -80,7 +80,7 @@ export default function HomeScreen() {
       
       <FeaturedRow 
       id="123"
-      title="Fetured"
+      title="Featured"
       description="Paid Placements from partners" 
       featuredCategory="featured"
       />     
@@ -88,7 +88,7 @@ export default function HomeScreen() {
       
       <FeaturedRow 
       id="125"
-      title="Fetured"
+      title="Tasty Discounts"
       description="Paid Placements from partners" 
       featuredCategory="featured"
       />     
@@ -99,7 +99,7 @@ export default function HomeScreen() {
       
       <FeaturedRow 
       id="124"
-      title="Fetured"
+      title="Offer Near You"
       description="Paid Placements from partners" 
       featuredCategory="featured"
       />     
@@ -107,8 +107,6 @@ export default function HomeScreen() {
 
 
       
-
-
 
       </ScrollView>
     </SafeAreaView>
