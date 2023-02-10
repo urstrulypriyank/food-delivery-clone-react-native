@@ -28,8 +28,9 @@ export default function FeaturedRow({ id, title, description }) {
       ).then(data => {
         setResturants(data?.resturant);
   })
-  }, []);
-  console.log(resturants);
+  }, [id]);
+
+  // console.log(resturants);
 
 
   return (

@@ -1,9 +1,10 @@
 // Resturnat card component
 
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, {  useLayoutEffect } from "react";
 import { StarIcon, MapPinIcon } from "react-native-heroicons/solid";
 import { urlFor } from "../sanity";
+import { useNavigation } from "@react-navigation/native";
 export default function ResturantComponent({
   id,
   imgUrl,
@@ -16,9 +17,33 @@ export default function ResturantComponent({
   longitude,
   latitude,
 }) {
+ 
+//  we require navigation object to navigate using stack screen
+  const navigation = useNavigation();
+
+
   return (
-    <TouchableOpacity className="bg-white mr-3 shadow">
-      <Image source={{ uri: urlFor(imgUrl).url() }} className="h-36 w-64 rounded-sm" />
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("Restaurant", {
+          id,
+          imgUrl,
+          title,
+          rating,
+          genre,
+          address,
+          shortDescription,
+          dishes,
+          longitude,
+          latitude,
+        });
+      }}
+      className="bg-white mr-3 shadow"
+    >
+      <Image
+        source={{ uri: urlFor(imgUrl).url() }}
+        className="h-36 w-64 rounded-sm"
+      />
       <View className="px-3 pb-3 ">
         <Text className="font-bold text-lg pt-2">{title}</Text>
         <View className="flex-row items-center space-x-1">

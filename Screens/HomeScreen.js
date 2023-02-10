@@ -8,12 +8,11 @@ import {
   ChevronDownIcon,
   UserIcon,
   AdjustmentsVerticalIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
 } from "react-native-heroicons/outline";
 import Categeories from "../Components/Categeories";
 import FeaturedRow from "../Components/FeaturedRow";
 import sanityClient from "../sanity";
-
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -25,8 +24,10 @@ export default function HomeScreen() {
     });
   }, []);
 
-  useEffect(()=>{
-      sanityClient.fetch(`
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
       
       *[_type == "featured" ] {
         ...,
@@ -37,16 +38,18 @@ export default function HomeScreen() {
         },
       }
 
-      `).then((data) =>{
+      `
+      )
+      .then((data) => {
         setFeaturedCategories(data);
-      })
-    },[])
-    
-    // console.log(featuredCategories)
+      });
+  }, []);
+
+  // console.log(featuredCategories)
   return (
     <SafeAreaView className="bg-white pt-5 flex-1">
       {/* VIEW-1  Header*/}
-      <View >
+      <View>
         <View className="flex-row pb-3 items-center mx-4 space-x-2">
           <Image
             source={require("../assets/Images/logo.png")}
@@ -67,54 +70,37 @@ export default function HomeScreen() {
         </View>
       </View>
 
-        {/* VIEW-2  search */}
-  
-        <View className="flex-row items-center pb-2 mx-4">
-         
-          <View className="flex-1 flex-row  space-x-2 bg-gray-200 p-3 mx-2">
-            <MagnifyingGlassIcon color="gray" size={20} />
-            <TextInput placeholder="Resturants and cuisines" keyboardType="default" />
-          </View>
-          <AdjustmentsVerticalIcon color="#00CCBB"></AdjustmentsVerticalIcon>
-        
+      {/* VIEW-2  search */}
+
+      <View className="flex-row items-center pb-2 mx-4">
+        <View className="flex-1 flex-row  space-x-2 bg-gray-200 p-3 mx-2">
+          <MagnifyingGlassIcon color="gray" size={20} />
+          <TextInput
+            placeholder="Resturants and cuisines"
+            keyboardType="default"
+          />
         </View>
-
-
+        <AdjustmentsVerticalIcon color="#00CCBB"></AdjustmentsVerticalIcon>
+      </View>
 
       {/* Body Scroll VIew */}
 
-      <ScrollView className="bg-gray-100" >
-
+      <ScrollView className="bg-gray-100">
         {/* Catageories compontens */}
-        
-          <Categeories/> 
 
+        <Categeories />
 
-
-      
-      
-      
-      
-      
         {/* Featured food row horizontal  */}
 
-        {featuredCategories?.map(category => (
-          <FeaturedRow 
-          key={category._id}
-          id={category._id}
-          
-          title={category.name}
-          description={category.short_description}
-          // featuredCategory={category.featuredCategories}
-          />   
+        {featuredCategories?.map((category) => (
+          <FeaturedRow
+            key={category._id}
+            id={category._id}
+            title={category.name}
+            description={category.short_description}
+            // featuredCategory={category.featuredCategories}
+          />
         ))}
-      
-     
-      
-
-
-      
-
       </ScrollView>
     </SafeAreaView>
   );

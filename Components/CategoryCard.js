@@ -11,7 +11,7 @@ export default function CategoryCard(props) {
        className="h-20 w-20 rounded opacity-60"
         ></Image> */}
       <Image
-        source={{uri: 'https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'}}
+        source={{uri: props.imgUrl}}
        className="h-20 w-20 rounded "
         ></Image>
 
