@@ -1,9 +1,37 @@
 import { View, Text, ScrollView } from "react-native";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ResturantComponent from "./ResturantComponent";
+import sanityClient from "../sanity";
 
 export default function FeaturedRow({ id, title, description }) {
+  const [resturants, setResturants] = useState([]);
+
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
+      
+        *[_type == "featured" && _id == $id] {
+          ...,
+          resturant[]->{
+            ...,
+            dishes[]->,
+            type-> {
+              name
+            
+            }
+          },
+        }[0]`,
+        {id}
+      ).then(data => {
+        setResturants(data?.resturant);
+  })
+  }, []);
+  console.log(resturants);
+
+
   return (
     <View>
       <View className="mt-4 flex-row items-end justify-between mx-3">
@@ -23,96 +51,27 @@ export default function FeaturedRow({ id, title, description }) {
       > 
       {/* Resturant & Dishes Card Component*/}
 
-      <ResturantComponent
-        id="123"
-        imgUrl="https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'"
-        title="swaad"
-        rating="4"
-        genre="IndiPureVeg"
-        address="DB mall Bhopal"
-        shortDescription="Serving you from new to oldest and forgotten recipies for more than 200 years"
-        dishes={{
-          1: "dish 1",
-          2: "dish 2",
-          3: "dish 3",
-          4: "dish 4",
-        }}
-        longitude="20"
-        latitude="0"
-        className="mr-2"
-        />
-      <ResturantComponent
-        id="123"
-        imgUrl="https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'"
-        title="swaad"
-        rating="4"
-        genre="IndiPureVeg"
-        address="DB mall Bhopal"
-        shortDescription="Serving you from new to oldest and forgotten recipies for more than 200 years"
-        dishes={{
-          1: "dish 1",
-          2: "dish 2",
-          3: "dish 3",
-          4: "dish 4",
-        }}
-        longitude="20"
-        latitude="0"
-        className="mr-2"
-        />
-      <ResturantComponent
-        id="123"
-        imgUrl="https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'"
-        title="swaad"
-        rating="4"
-        genre="IndiPureVeg"
-        address="DB mall Bhopal"
-        shortDescription="Serving you from new to oldest and forgotten recipies for more than 200 years"
-        dishes={{
-          1: "dish 1",
-          2: "dish 2",
-          3: "dish 3",
-          4: "dish 4",
-        }}
-        longitude="20"
-        latitude="0"
-        className="mr-2"
-        />
-      <ResturantComponent
-        id="123"
-        imgUrl="https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'"
-        title="swaad"
-        rating="4"
-        genre="IndiPureVeg"
-        address="DB mall Bhopal"
-        shortDescription="Serving you from new to oldest and forgotten recipies for more than 200 years"
-        dishes={{
-          1: "dish 1",
-          2: "dish 2",
-          3: "dish 3",
-          4: "dish 4",
-        }}
-        longitude="20"
-        latitude="0"
-        className="mr-2"
-        />
-      <ResturantComponent
-        id="123"
-        imgUrl="https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60'"
-        title="swaad"
-        rating="4"
-        genre="IndiPureVeg"
-        address="DB mall Bhopal"
-        shortDescription="Serving you from new to oldest and forgotten recipies for more than 200 years"
-        dishes={{
-          1: "dish 1",
-          2: "dish 2",
-          3: "dish 3",
-          4: "dish 4",
-        }}
-        longitude="20"
-        latitude="0"
-        className="mr-2"
-        />
+       
+        
+
+        {resturants?.map((obj) => (
+          <ResturantComponent
+          key={obj._id}
+          id={obj._id}
+          imgUrl={obj.Image}
+          title={obj.name}
+          rating={obj.rating}
+          genre={obj.type?.name}
+          address={obj.address}
+          short_description={obj.short_description}
+          dishes={obj.dishes}
+          longitude={obj.longitude}
+          latitude={obj.latitude}
+          
+          />
+        ))}
+        
+     
       </ScrollView>
     </View>
   );

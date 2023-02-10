@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 
-export default defineType({
+export default {
   name: 'resturant',
   title: 'Resturant',
   type: 'document',
@@ -63,4 +63,4 @@ export default defineType({
         of: [{type: "reference", to:[{type: "dish"}]}]
       },
   ],
-})
+}

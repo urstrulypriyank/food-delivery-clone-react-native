@@ -1,5 +1,5 @@
 import { View, Text, Image, TextInput, ScrollView } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -7,22 +7,42 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ChevronDownIcon,
   UserIcon,
-  AdjustmentsHorizontalIcon,
   AdjustmentsVerticalIcon,
   MagnifyingGlassIcon
 } from "react-native-heroicons/outline";
 import Categeories from "../Components/Categeories";
 import FeaturedRow from "../Components/FeaturedRow";
+import sanityClient from "../sanity";
 
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const [featuredCategories, setFeaturedCategories] = useState([]);
   // we are setting defautl header to not to show
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
     });
   }, []);
+
+  useEffect(()=>{
+      sanityClient.fetch(`
+      
+      *[_type == "featured" ] {
+        ...,
+        resturant[]->{
+          ...,
+          dishes[]->,
+         
+        },
+      }
+
+      `).then((data) =>{
+        setFeaturedCategories(data);
+      })
+    },[])
+    
+    // console.log(featuredCategories)
   return (
     <SafeAreaView className="bg-white pt-5 flex-1">
       {/* VIEW-1  Header*/}
@@ -66,7 +86,7 @@ export default function HomeScreen() {
       <ScrollView className="bg-gray-100" >
 
         {/* Catageories compontens */}
-
+        
           <Categeories/> 
 
 
@@ -77,32 +97,19 @@ export default function HomeScreen() {
       
       
         {/* Featured food row horizontal  */}
+
+        {featuredCategories?.map(category => (
+          <FeaturedRow 
+          key={category._id}
+          id={category._id}
+          
+          title={category.name}
+          description={category.short_description}
+          // featuredCategory={category.featuredCategories}
+          />   
+        ))}
       
-      <FeaturedRow 
-      id="123"
-      title="Featured"
-      description="Paid Placements from partners" 
-      featuredCategory="featured"
-      />     
-        {/* Tasty Discounts horizontal scroll view */}
-      
-      <FeaturedRow 
-      id="125"
-      title="Tasty Discounts"
-      description="Paid Placements from partners" 
-      featuredCategory="featured"
-      />     
-      
-      
-      
-        {/* Offer Near you horizontal scroll view */}
-      
-      <FeaturedRow 
-      id="124"
-      title="Offer Near You"
-      description="Paid Placements from partners" 
-      featuredCategory="featured"
-      />     
+     
       
 
 
